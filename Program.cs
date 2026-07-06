@@ -1,4 +1,5 @@
 using ApiSeguraActividad4.Data;
+using ApiSeguraActividad4.Middleware; 
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+app.UseMiddleware<ApiKeyMiddleware>();
+
 app.UseAuthorization();
 app.MapControllers();
 
