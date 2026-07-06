@@ -1,0 +1,6 @@
+@ApiSeguraActividad4_HostAddress = http://localhost:5193
+
+GET {{ApiSeguraActividad4_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
