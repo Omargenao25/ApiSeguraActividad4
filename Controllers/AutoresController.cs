@@ -1,4 +1,5 @@
 ﻿using ApiSeguraActividad4.Data;
+using ApiSeguraActividad4.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -74,6 +75,31 @@ namespace ApiSeguraActividad4.Controllers
                 TotalPaginas = totalPaginas,
                 Elementos = autores
             });
+        }
+
+
+      
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Autor>> GetAutor(int id)
+        {
+            var autor = await _context.Autores.FindAsync(id);
+
+            if (autor == null)
+            {
+                return NotFound("No se encontró el autor solicitado.");
+            }
+
+            return Ok(autor);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult<Autor>> PostAutor(Autor autor)
+        {
+            _context.Autores.Add(autor);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetAutor), new { id = autor.Id }, autor);
         }
     }
 }
