@@ -101,5 +101,26 @@ namespace ApiSeguraActividad4.Controllers
 
             return CreatedAtAction(nameof(GetAutor), new { id = autor.Id }, autor);
         }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAutor(int id, Autor autor)
+        {
+            if (id != autor.Id)
+            {
+                return BadRequest("El ID no coincide.");
+            }
+
+            var autorExiste = await _context.Autores.AnyAsync(a => a.Id == id);
+            if (!autorExiste)
+            {
+                return NotFound("El autor no existe.");
+            }
+
+            _context.Entry(autor).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
