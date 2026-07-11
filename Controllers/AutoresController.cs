@@ -122,5 +122,27 @@ namespace ApiSeguraActividad4.Controllers
 
             return NoContent();
         }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAutor(int id)
+        {
+            var autor = await _context.Autores.FindAsync(id);
+            if (autor == null)
+            {
+                return NotFound("El autor no existe.");
+            }
+
+            var tieneLibros = await _context.Libros.AnyAsync(l => l.AutorId == id);
+            if (tieneLibros)
+            {
+                return BadRequest("No se puede eliminar este autor porque tiene libros asociados.");
+            }
+
+            _context.Autores.Remove(autor);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }
