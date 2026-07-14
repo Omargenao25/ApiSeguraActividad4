@@ -1,4 +1,4 @@
-﻿using ApiSeguraActividad4.Data; // Ajustado a tu nuevo DbContext
+﻿using ApiSeguraActividad4.Data; 
 using ApiSeguraActividad4.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,18 +17,24 @@ namespace ApiSeguraActividad4.Controllers
         }
 
   
-        [HttpGet]
-        public async Task<ActionResult> GetLibros(
+        [HttpGet("paginado")]
+        public async Task<ActionResult> GetLibrosPaginado(
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 5,
             [FromQuery] string? buscar = null,
             [FromQuery] string? ordenarPor = null,
             [FromQuery] string? direccion = "asc")
         {
-            if (page < 1) page = 1;
-            if (pageSize < 1) pageSize = 5;
 
-   
+            if (page < 1)
+            {
+                return BadRequest("La página solicitada debe ser mayor o igual a 1.");
+            }
+            if (pageSize < 1)
+            {
+                return BadRequest("El tamaño de página debe ser mayor o igual a 1.");
+            }
+
             var query = _context.Libros.AsQueryable();
 
        

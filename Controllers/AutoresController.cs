@@ -17,7 +17,14 @@ namespace ApiSeguraActividad4.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAutores(
+        public async Task<ActionResult<IEnumerable<Autor>>> GetAutoresTodos()
+        {
+            var autores = await _context.Autores.ToListAsync();
+            return Ok(autores);
+        }
+
+        [HttpGet("paginado")]
+        public async Task<ActionResult> GetAutoresPaginado(
             [FromQuery] int page = 1,
             [FromQuery] int pageSize = 5,
             [FromQuery] string? buscar = null,

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ApiSeguraActividad4.Models
 {
@@ -31,6 +32,7 @@ namespace ApiSeguraActividad4.Models
 
 
         [ForeignKey("AutorId")]
+        [JsonIgnore]
         public Autor? Autor { get; set; }
     }
 }
